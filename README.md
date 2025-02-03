@@ -1,42 +1,16 @@
-# Nuxt 3 Minimal Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+<!-- clone the assignment -->
+git clone https://github.com/Jyoti-Khatkar/Assignment-Alike.git
 
-## Setup
+<!-- checkout branch -->
+git checkout master
 
-Make sure to install the dependencies:
+<!-- if have nvm :- -->
+<!-- Use the latest version of node -->
+nvm use 22
 
-```bash
-# yarn
-yarn install
-
-# npm
+<!-- install the dependemcies of project -->
 npm install
 
-# pnpm
-pnpm install
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+<!-- to run the application use -->
+npx nuxt dev
