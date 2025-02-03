@@ -25,6 +25,13 @@ export default defineNuxtConfig({
     typeCheck: false
   },
 
+  nitro: {
+    preset:'vercel',
+    compressPublicAssets: true,
+    // Here we specify the public directory for static assets in Nitro
+    publicDir: 'public'
+  },
+
   build: {
     transpile: ['@heroicons/vue']
   },
