@@ -14,6 +14,7 @@
     "@heroicons/vue": "^2.1.1",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@pinia/nuxt": "^0.5.1",
+    "lodash": "^4.17.21",
     "nuxt": "^3.13.0",
     "pinia": "^2.1.7",
     "vue3-toastify": "^0.2.1"

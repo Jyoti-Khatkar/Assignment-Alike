@@ -3,7 +3,7 @@
       <input
         type="text"
         v-model="searchQuery"
-        @input="fetchDestinations"
+        @input="onInput"
         class="w-full px-6 py-4 text-lg rounded-full border-2 border-white bg-white bg-opacity-20 text-white placeholder-white backdrop-blur-sm focus:outline-none focus:border-indigo-500"
         placeholder="Search destination..."
       />
@@ -22,23 +22,22 @@
   </template>
   
   <script setup lang="ts">
-//   import { debounce } from '~/utils/debounce';
-
+  import { ref } from 'vue';
+  import { debounce } from 'lodash';
+  
   const searchQuery = ref('');
   const destinations = ref([]);
   
   const fetchDestinations = async () => {
-      const { data } = await useFetch('/api/destinations', {
-        query: { q: searchQuery.value }
-      });
-      destinations.value = data.value;
+    const { data } = await useFetch('/api/destinations', {
+      query: { q: searchQuery.value }
+    });
+    destinations.value = data.value;
   };
-
-
-//   const handleInput = debounce(async () => {
-//     const { data } = await useFetch('/api/destinations', {
-//         query: { q: searchQuery.value }
-//       });
-//       destinations.value = data.value;
-//   }, 300);
+  
+  const debouncedFetchDestinations = debounce(fetchDestinations, 300);
+  
+  const onInput = () => {
+    debouncedFetchDestinations();
+  };
   </script>
