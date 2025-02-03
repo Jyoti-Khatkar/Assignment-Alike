@@ -9,7 +9,7 @@
       
       <form class="mt-8 space-y-6" @submit.prevent="handleSignIn">
         <div class="rounded-md shadow-sm -space-y-px">
-          <div>
+          <div class="pb-2">
             <label for="email" class="sr-only">Email address</label>
             <input
               v-model="email"

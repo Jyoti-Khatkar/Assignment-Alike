@@ -43,7 +43,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import DestinationSearch from '~/components//Home/DestinationSearch.vue';
 const searchQuery = ref('')
 const loading = ref(false)

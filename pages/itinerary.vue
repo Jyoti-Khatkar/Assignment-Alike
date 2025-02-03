@@ -113,62 +113,16 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 
-import { useRouter } from 'vue-router'
-// import { useAuthStore } from '~/store/auth' // Ensure this path is correct
-
-const router = useRouter()
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
+}
 const destination = ref('');
-const startDate = ref('');
-const endDate = ref('');
 const isDestinationSelected = ref(false);
 const dropdownClose = ref(true);
-
-
-const dropdownContainer = ref(null)
-// Computed property to control dropdown visibility
-const showDropdown = computed(() => {
-  return (destination.value.trim() !== '' || !isDestinationSelected.value) && !dropdownClose.value  ;
-});
-
-
-
-// Fetch all destinations when the search input is clicked
-const showAllDestinations = async () => {
-  isDestinationSelected.value = false; // Reset selection state
-  const { data } = await useFetch('/api/destinations');
-  destinations.value = data.value || [];
-};
-
-// Fetch destinations based on search query
-const fetchDestinations = async () => {
-    const { data } = await useFetch('/api/destinations', {
-      query: { q: destination.value },
-    });
-    destinations.value = data.value || [];
-
-};
-
-
-const focusF = (val) =>{
-  dropdownClose.value = false;
-}
-
-const handleBlur = () =>{
-  setTimeout(() => {
-  dropdownClose.value = true;
-    
-  }, 500);
-}
-// const authStore = useAuthStore()
-
-// Check authentication
-onMounted(() => {
-  // if (!authStore.isAuthenticated) {
-  //   router.push('/login') // Redirect to login if not authenticated
-  // }
-  loadSavedItineraries() // Load saved itineraries
-})
-
 interface Itinerary {
   id: number
   destination: string
@@ -194,6 +148,43 @@ const newItinerary = ref({
 const savedItineraries = ref<Itinerary[]>([])
 const searchQuery = ref('')
 const destinations = ref<Destination[]>([])
+
+onMounted(() => {
+  loadSavedItineraries() // Load saved itineraries
+})
+
+// Computed property to control dropdown visibility
+const showDropdown = computed(() => {
+  return (destination.value.trim() !== '' || !isDestinationSelected.value) && !dropdownClose.value  ;
+});
+
+// Fetch all destinations when the search input is clicked
+const showAllDestinations = async () => {
+  isDestinationSelected.value = false; // Reset selection state
+  const { data } = await useFetch('/api/destinations');
+  destinations.value = data.value || [];
+};
+
+// Fetch destinations based on search query
+const fetchDestinations = async () => {
+    const { data } = await useFetch('/api/destinations', {
+      query: { q: destination.value },
+    });
+    destinations.value = data.value || [];
+
+};
+
+
+const focusF = (e) =>{
+  dropdownClose.value = false;
+}
+
+const handleBlur = () =>{
+  setTimeout(() => {
+  dropdownClose.value = true;
+    
+  }, 500);
+}
 
 const loadSavedItineraries = () => {
   const saved = localStorage.getItem('itineraries')
@@ -225,16 +216,6 @@ const saveItinerary = () => {
     image:'https://images.unsplash.com/photo-1469474968028-56623f02e42e'
   }
 }
-
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })
-}
-
-
 
 // Select a destination from the dropdown
 const selectDestination = (destinationVal: Destination) => {
