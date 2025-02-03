@@ -14,7 +14,7 @@
   
           <!-- Main Image -->
           <div v-if="destination?.image" class="relative h-[400px] mb-12 rounded-lg overflow-hidden">
-            <img
+            <NuxtImg
               :src="destination.image"
               :alt="destination.name"
               class="w-full h-full object-cover"
@@ -33,7 +33,7 @@
                 :key="index"
                 class="bg-white rounded-lg shadow-md overflow-hidden"
               >
-                <img
+                <NuxtImg
                   :src="attraction"
                   :alt="`Attraction ${index + 1}`"
                   class="w-full h-48 object-cover"

@@ -1,22 +1,31 @@
-import { ref } from 'vue';
+import { ref, watch } from 'vue'
+import { debounce } from 'lodash'
 
-export const useDestinations = () => {
-  const destinations = ref([]);
-  const isLoading = ref(false);
+export function useDestinations() {
+  // State for the search query and destinations list
+  const searchQuery = ref('')
+  const destinations = ref<any[]>([])
 
-  const fetchDestinations = async (query: string) => {
-    isLoading.value = true;
-    try {
+  // Function to fetch destinations based on the search query
+  const fetchDestinations = async () => {
       const { data } = await useFetch('/api/destinations', {
-        query: { q: query },
-      });
-      destinations.value = data.value;
-    } catch (error) {
-      console.error('Error fetching destinations:', error);
-    } finally {
-      isLoading.value = false;
-    }
-  };
+        query: { q: searchQuery.value },
+      })
+      destinations.value = data.value || []
+  }
 
-  return { destinations, isLoading, fetchDestinations };
-};
+  // Debounce the fetchDestinations function to avoid making too many API calls
+  const debouncedFetchDestinations = debounce(fetchDestinations, 300)
+
+  // Watch for changes in the search query and trigger the debounced function
+  watch(searchQuery, () => {
+    debouncedFetchDestinations()
+  })
+
+  // Return the searchQuery, destinations list, and a method to trigger fetch manually
+  return {
+    searchQuery,
+    destinations,
+    fetchDestinations, // In case you want to manually fetch destinations elsewhere
+  }
+}

@@ -2,10 +2,11 @@
   <div class="relative">
     <!-- Hero Section with Search -->
     <div class="relative h-[600px]">
-      <img 
+      <NuxtImg 
         src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDQwMm4yNnN0YTRleXNycTNhZmVnbTBma3UyNmJnMXZmZTEyazBibSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YSxEHyUtxyduWiGkUg/giphy.gif"
         alt="Travel Background"
         class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
       />
       <div class="absolute inset-0 bg-black bg-opacity-50"></div>
       <div class="absolute inset-0 flex items-center justify-center">
@@ -25,10 +26,11 @@
         :key="destination.id"
         class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
       >
-        <img
+        <NuxtImg
           :src="destination.image"
           :alt="destination.name"
           class="w-full h-48 object-cover"
+          loading="lazy"
         />
         <div class="p-6 text-center">
           <h3 class="text-xl font-bold text-gray-900 mb-2">{{ destination.name }}</h3>
