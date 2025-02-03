@@ -2,7 +2,7 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl w-full flex bg-white shadow-lg rounded-lg overflow-hidden">
       <!-- Image Section -->
-      <div class="hidden md:block w-1/2 bg-cover bg-center" style="background-image: url('/assets/images/register.jpg');">
+      <div class="hidden md:block w-1/2 bg-cover bg-center" style="background-image: url('/assets/images/signin.jpg');">
       </div>
 
       <!-- Form Section -->
