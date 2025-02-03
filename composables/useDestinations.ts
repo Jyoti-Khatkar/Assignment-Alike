@@ -1,5 +1,7 @@
 import { ref, watch } from 'vue'
-import { debounce } from 'lodash'
+import pkg from 'lodash'
+// import { debounce } from 'lodash'
+const { debounce } = pkg
 
 export function useDestinations() {
   // State for the search query and destinations list

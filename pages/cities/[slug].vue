@@ -67,39 +67,39 @@
   
   // Fetch destination and attractions
   const fetchData = async () => {
-    try {
-      loading.value = true
-  
-      // Fetch destination data
-      const { data: destinationData } = await useFetch('/api/destinations', {
-        query: { q: route.params.slug }
-      })
-  
-      // Fetch location pictures
-      const { data: locationPictures } = await useFetch('/api/locationsPicture', {
-        query: { q: route.params.slug }
-      })
-  
-      // Assign data
-      if (destinationData.value && destinationData.value.length > 0) {
-        destination.value = destinationData.value[0]
-      } else {
-        destination.value = null
+  try {
+    loading.value = true
+
+    // Fetch destination data
+    const response = await fetch(`/api/destinations?q=${route.params.slug}`)
+    const destinationData = await response.json()
+
+    // Fetch location pictures
+    const pictureResponse = await fetch(`/api/locationsPicture?q=${route.params.slug}`)
+    const locationPictures = await pictureResponse.json()
+
+    // Assign data
+        if (destinationData && destinationData.length > 0) {
+          destination.value = destinationData[0]
+        } else {
+          destination.value = null
+        }
+
+        if (locationPictures && locationPictures.length > 0) {
+          attractions.value = locationPictures[0]
+        } else {
+          attractions.value = null
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      } finally {
+        loading.value = false
       }
-  
-      if (locationPictures.value && locationPictures.value.length > 0) {
-        attractions.value = locationPictures.value[0]
-      } else {
-        attractions.value = null
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    } finally {
-      loading.value = false
     }
-  }
   
   // Fetch data on mount and when the slug changes
-  onMounted(fetchData)
+  onMounted(()=>{
+    fetchData()
+  })
   watch(() => route.params.slug, fetchData)
   </script>

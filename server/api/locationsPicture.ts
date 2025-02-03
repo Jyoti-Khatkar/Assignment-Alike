@@ -8,16 +8,16 @@ const destinations = [
       '/assets/images/a3.jpg'
     ] 
   },
-  { id: 2, title: 'New York', description: 'The Big Apple', images: [
+  { id: 2, title: 'Dubai', description: 'The Big Apple', images: [
       '/assets/images/a4.jpg',
       '/assets/images/a5.jpg',
       '/assets/images/a6.jpg'
     ] 
   },
   { id: 3, title: 'Tokyo', description: 'Vibrant Metropolis', images: [
-      'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=500',
-      'https://images.unsplash.com/photo-1521318291230-cd4a6b5f3146?w=500',
-      'https://images.unsplash.com/photo-1494499486952-786d09a7c6b5?w=500'
+      '/assets/images/a7.jpg',
+      '/assets/images/a8.jpg',
+      '/assets/images/a9.jpg'
     ] 
   },
 ];
