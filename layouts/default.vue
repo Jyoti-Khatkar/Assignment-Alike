@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col">
     <header class="bg-white shadow-md">
       <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <NuxtLink to="/" class="flex items-center space-x-2">
+        <!-- <NuxtLink to="/" class="flex items-center space-x-2">
           <img src="/favicon.ico" alt="Smart Travel Planner" class="h-8 w-auto" />
           <span class="text-xl font-bold text-indigo-600">Smart Travel Planner</span>
         </NuxtLink>
@@ -13,45 +13,33 @@
             class="text-gray-700 hover:text-indigo-600 font-medium"
           >
             Itinerary
+          </NuxtLink> -->
+
+          <!-- <NuxtLink to="/" class="text-xl font-bold">Logo</NuxtLink> -->
+       <NuxtLink to="/" class="flex items-center space-x-2">
+          <img src="/favicon.ico" alt="Smart Travel Planner" class="h-8 w-auto" />
+          <span class="text-xl font-bold text-indigo-600">Smart Travel Planner</span>
+        </NuxtLink>
+      
+      <div class="flex items-center gap-4">
+        <NuxtLink 
+            to="/itinerary" 
+            class="text-gray-700 hover:text-indigo-600 font-medium"
+          >
+            Itinerary
           </NuxtLink>
-          
-          <!-- <div class="relative" v-click-outside="closeDropdown">
-            <button 
-              @click="toggleDropdown" 
-              class="flex items-center space-x-2 text-gray-700 hover:text-indigo-600"
-            >
-              <UserCircleIcon class="h-6 w-6" />
-              <ChevronDownIcon class="h-4 w-4" />
+        
+        <div v-if="isAuthenticated" class="relative group">
+            <button @click="handleLogout" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">
+              Logout
             </button>
-            
-            <div 
-              v-if="isDropdownOpen" 
-              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1"
-            >
-              <template v-if="!isAuthenticated">
-                <NuxtLink 
-                  to="/auth/signin" 
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50"
-                >
-                  Sign In
-                </NuxtLink>
-                <NuxtLink 
-                  to="/auth/register" 
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50"
-                >
-                  Register
-                </NuxtLink>
-              </template>
-              <button 
-                v-else
-                @click="logout" 
-                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50"
-              >
-                Logout
-              </button>
-            </div>
-          </div> -->
         </div>
+        
+        <template v-else>
+          <NuxtLink to="/auth/login" class="hover:text-gray-300">Login</NuxtLink>
+          <NuxtLink to="/auth/register" class="hover:text-gray-300">Register</NuxtLink>
+        </template>
+      </div>
       </nav>
     </header>
 
@@ -98,25 +86,31 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import {useAuth} from '~/composables/useAuth'
 import { UserCircleIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
+const { isAuthenticated, logout } = useAuth()
+const router = useRouter()
+
 const isDropdownOpen = ref(false)
-const isAuthenticated = ref(false) // Replace with actual auth state from store
+
+const handleLogout = () => {
+  logout();
+  router.push('/auth/login');
+}
 
 const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value
+  isDropdownOpen.value = !isDropdownOpen.value;
 }
 
 const closeDropdown = () => {
-  isDropdownOpen.value = false
-}
-
-const logout = () => {
-  // Implement logout logic
-  isAuthenticated.value = false
-  closeDropdown()
+  isDropdownOpen.value = false;
 }
 </script>
+
+
+
 
 <style>
 .page-enter-active,

@@ -36,7 +36,7 @@ If a user is not logged in, clicking on Itinerary redirects to the Sign In page.
 <!-- For Authentication :- -->
 
 signUp:-auth/register
-signIN :-auth/signin
+signIN :-auth/login
 
 - In Header Profile Icon in the right corner having two option signIN And SignUp
 -Once user signUp than move to sign IN Page

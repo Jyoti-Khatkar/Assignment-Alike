@@ -2,14 +2,11 @@
   <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
-        </h2>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in</h2>
       </div>
-      
-      <form class="mt-8 space-y-6" @submit.prevent="handleSignIn">
+      <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
         <div class="rounded-md shadow-sm -space-y-px">
-          <div class="pb-2">
+          <div>
             <label for="email" class="sr-only">Email address</label>
             <input
               v-model="email"
@@ -35,6 +32,10 @@
           </div>
         </div>
 
+        <div v-if="errorMessage" class="text-red-500 text-sm text-center">
+          {{ errorMessage }}
+        </div>
+
         <div>
           <button
             type="submit"
@@ -48,11 +49,8 @@
       <div class="text-center">
         <p class="text-sm text-gray-600">
           Don't have an account?
-          <NuxtLink
-            to="/auth/register"
-            class="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Register
+          <NuxtLink to="/auth/register" class="font-medium text-indigo-600 hover:text-indigo-500">
+            Create new account
           </NuxtLink>
         </p>
       </div>
@@ -61,31 +59,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import {useAuth} from '~/composables/useAuth';
 
 const router = useRouter()
+const { login } = useAuth()
+
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
 
-const handleSignIn = () => {
-  // Get users from localStorage
-  const users = JSON.parse(localStorage.getItem('users') || '[]')
-  
-  // Find user
-  const user = users.find((u: any) => 
-    u.email === email.value && u.password === password.value
-  )
-
-  if (user) {
-    // Set auth state
-    localStorage.setItem('isAuthenticated', 'true')
-    localStorage.setItem('currentUser', JSON.stringify(user))
-    
-    // Redirect
+const handleLogin = () => {
+  const result = login(email.value, password.value)
+  if (result.success) {
     router.push('/')
   } else {
-    alert('Invalid credentials')
+    errorMessage.value = result.message
   }
 }
 </script>

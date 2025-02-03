@@ -112,7 +112,9 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-
+definePageMeta({
+  middleware: ['auth']
+})
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
